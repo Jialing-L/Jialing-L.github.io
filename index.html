@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jialiang Li — Mathematics &amp; Astrophysics @ U of T</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@350;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0b10;
+    --surface: #14141c;
+    --surface-elevated: #1a1a24;
+    --text: #e4e4ec;
+    --text-muted: #8e8e9e;
+    --text-faint: #5e5e6e;
+    --accent: #c4a060;
+    --accent-dim: rgba(196, 160, 96, 0.12);
+    --border: #1e1e2a;
+    --border-light: #262634;
+    --radius: 6px;
+    --radius-lg: 10px;
+    --max-w: 680px;
+    --gap-xs: 6px;
+    --gap-sm: 14px;
+    --gap: 24px;
+    --gap-lg: 48px;
+    --gap-xl: 80px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Selection */
+  ::selection { background: rgba(196, 160, 96, 0.28); color: var(--text); }
+
+  /* Scroll animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+                transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Layout */
+  .container {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  section { padding: var(--gap-xl) 0; }
+
+  /* ---- Hero ---- */
+  .hero {
+    padding: 120px 0 60px;
+    position: relative;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(196, 160, 96, 0.04), transparent),
+      radial-gradient(ellipse 60% 40% at 80% 20%, rgba(120, 140, 200, 0.03), transparent);
+    pointer-events: none;
+  }
+  .hero-name {
+    font-family: "Crimson Text", "Garamond", "Georgia", "Times New Roman", serif;
+    font-size: clamp(38px, 6vw, 56px);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: #f0f0f6;
+    margin-bottom: 10px;
+  }
+  .hero-tagline {
+    font-size: 15px;
+    color: var(--text-muted);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-tagline::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.5;
+  }
+  .hero-bio {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 540px;
+    line-height: 1.65;
+  }
+  .hero-cv {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 22px;
+    padding: 7px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: "Inter", system-ui, sans-serif;
+    color: var(--accent);
+    border: 1px solid rgba(196, 160, 96, 0.3);
+    border-radius: 20px;
+    text-decoration: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .hero-cv:hover { background: var(--accent-dim); border-color: var(--accent); }
+  .hero-cv-icon { font-size: 15px; }
+
+  /* ---- Section headings ---- */
+  .section-label {
+    font-family: "Crimson Text", "Garamond", "Georgia", "Times New Roman", serif;
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-faint);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ---- About ---- */
+  .about-text {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 620px;
+  }
+  .about-text p + p { margin-top: 14px; }
+
+  /* ---- Projects ---- */
+  .projects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+  }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 30px;
+    transition: border-color 0.25s, background 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 100% 100% at 0% 0%, var(--accent-dim), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .project-card:hover {
+    border-color: var(--border-light);
+    background: var(--surface-elevated);
+  }
+  .project-card:hover::before { opacity: 1; }
+  .project-card > * { position: relative; z-index: 1; }
+  .project-title {
+    font-family: "Crimson Text", "Garamond", "Georgia", "Times New Roman", serif;
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 8px;
+    color: #f0f0f6;
+  }
+  .project-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-xs);
+  }
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+  .tag.highlight { color: var(--accent); border-color: rgba(196, 160, 96, 0.2); background: var(--accent-dim); }
+
+  .project-link {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-faint);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .project-link:hover { color: var(--accent); }
+
+  /* ---- Skills ---- */
+  .skills-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .skill-pill {
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 450;
+    border-radius: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    transition: all 0.2s;
+    cursor: default;
+    letter-spacing: 0.01em;
+  }
+  .skill-pill:hover {
+    border-color: var(--accent);
+    color: var(--text);
+    background: var(--surface-elevated);
+  }
+
+  /* ---- Contact ---- */
+  .contact-section {
+    padding-bottom: 100px;
+  }
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-sm);
+    align-items: center;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .contact-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .contact-link:hover { color: var(--accent); border-color: var(--accent); }
+  .contact-sep { color: var(--text-faint); user-select: none; }
+
+  /* ---- Footer ---- */
+  .site-footer {
+    text-align: center;
+    padding: 32px 0;
+    font-size: 12px;
+    color: var(--text-faint);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---- Lang Toggle ---- */
+  .lang-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 12px;
+    font-family: "Inter", system-ui, sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .lang-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ---- Background decoration ---- */
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.3;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 30%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 30%, transparent 70%);
+  }
+
+  /* ---- Mobile ---- */
+  @media (max-width: 600px) {
+    .hero { padding: 80px 0 40px; }
+    section { padding: 52px 0; }
+    .container { padding: 0 18px; }
+    .project-card { padding: 22px 20px; }
+    :root {
+      --gap-xl: 52px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<button class="lang-toggle reveal" id="langToggle" aria-label="Switch language">中文</button>
+
+<main class="container">
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1 class="hero-name reveal">Jialiang Li</h1>
+    <p class="hero-tagline reveal" data-i18n="hero-tagline">Mathematics &amp; Astrophysics @ University of Toronto</p>
+    <p class="hero-bio reveal" data-i18n="hero-bio">
+      Double major in Mathematics and Astrophysics, minor in Physics.
+      I work at the intersection of mathematical rigor and physical intuition —
+      building computational models, analyzing data, and solving structured problems.
+    </p>
+    <a class="hero-cv reveal" href="#" data-i18n="hero-cv">
+      <span class="hero-cv-icon">&#8595;</span> CV / 简历
+    </a>
+  </section>
+
+  <!-- About -->
+  <section>
+    <h2 class="section-label reveal" data-i18n="section-about">About</h2>
+    <div class="about-text reveal">
+      <p data-i18n="about-p1">
+        I am a third-year undergraduate at the University of Toronto, pursuing a
+        double major in Mathematics and Astrophysics with a minor in Physics.
+        My coursework spans calculus, linear algebra, ordinary and partial differential
+        equations, linear and nonlinear optimization, number theory, group theory,
+        classical mechanics, electrodynamics, thermodynamics and statistical physics,
+        atmospheric physics, observational astronomy, stellar physics, and Python
+        data analysis.
+      </p>
+      <p data-i18n="about-p2">
+        I am fluent in English and Chinese, comfortable in both technical and
+        everyday contexts. I bring a structured, careful approach to problem-solving —
+        breaking complex problems into tractable pieces, translating theory into
+        computation, and communicating results clearly.
+      </p>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section>
+    <h2 class="section-label reveal" data-i18n="section-experience">Experience</h2>
+    <div class="projects-grid">
+
+      <article class="project-card reveal">
+        <h3 class="project-title" data-i18n="exp-astro-title">Astrophysical Computation &amp; Modeling</h3>
+        <p class="project-desc" data-i18n="exp-astro-desc">
+          Course-based projects translating theoretical physics into computational models.
+          Implemented orbital dynamics simulations, analyzed gravitational systems, and
+          built numerical solvers for differential equations arising in stellar structure.
+          Emphasis on converting mathematical formalism into clean, well-documented Python
+          code with visualization and error analysis.
+        </p>
+        <div class="project-tags">
+          <span class="tag highlight">Python</span>
+          <span class="tag highlight">Orbital Dynamics</span>
+          <span class="tag">Numerical Methods</span>
+          <span class="tag">Data Visualization</span>
+          <span class="tag">Differential Equations</span>
+        </div>
+      </article>
+
+      <article class="project-card reveal">
+        <h3 class="project-title"><span data-i18n="exp-spic-title">Product Center Intern &mdash; SPIC Hydrogen Energy</span> <span style="font-size:13px;color:var(--text-faint);font-family:Inter,sans-serif;font-weight:350;">2026.05 &ndash; 07</span></h3>
+        <p class="project-desc" data-i18n="exp-spic-desc">
+          Internship at the Product Center of State Power Investment Corporation (SPIC)
+          Hydrogen Energy Technology Development Co., Ltd. Contributed to product development
+          and technical coordination for hydrogen energy systems. Gained exposure to clean
+          energy technology workflows, cross-team collaboration, and the practical challenges
+          of bringing hydrogen-based solutions from R&amp;D toward industrial deployment.
+        </p>
+        <div class="project-tags">
+          <span class="tag highlight" data-i18n="tag-hydrogen">Hydrogen Energy</span>
+          <span class="tag highlight" data-i18n="tag-clean-energy">Clean Energy</span>
+          <span class="tag" data-i18n="tag-product-dev">Product Development</span>
+          <span class="tag" data-i18n="tag-tech-coord">Technical Coordination</span>
+          <span class="tag">R&amp;D</span>
+        </div>
+      </article>
+
+      <article class="project-card reveal">
+        <h3 class="project-title" data-i18n="exp-skf-title">Technical Support Assistant &mdash; SKF Distributor, Shanghai</h3>
+        <p class="project-desc" data-i18n="exp-skf-desc">
+          Internship at the Beijing general agency for SKF, supporting lubrication system
+          installation, commissioning, and fault diagnosis for industrial clients.
+          Assisted the sales team with project tracking and compiled technical documentation.
+          Developed practical troubleshooting skills and experience in a professional
+          engineering environment.
+        </p>
+        <div class="project-tags">
+          <span class="tag highlight" data-i18n="tag-tech-support">Technical Support</span>
+          <span class="tag" data-i18n="tag-fault-diag">Fault Diagnosis</span>
+          <span class="tag" data-i18n="tag-industrial">Industrial Systems</span>
+          <span class="tag" data-i18n="tag-documentation">Documentation</span>
+        </div>
+      </article>
+
+      <article class="project-card reveal">
+        <h3 class="project-title" data-i18n="exp-teach-title">Mathematics &amp; English Instructor</h3>
+        <p class="project-desc" data-i18n="exp-teach-desc">
+          Taught Singapore Mathematics using the CPA (Concrete-Pictorial-Abstract) approach
+          at an education company in Beijing. Also led English reading courses and taught
+          Rubik's cube solving as a structured problem-solving exercise. Developed clear
+          communication skills and the ability to break complex ideas into learnable steps.
+        </p>
+        <div class="project-tags">
+          <span class="tag highlight" data-i18n="tag-teaching">Teaching</span>
+          <span class="tag highlight">CPA Methodology</span>
+          <span class="tag" data-i18n="tag-math-edu">Mathematics Education</span>
+          <span class="tag" data-i18n="tag-english">English</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Publications -->
+  <section>
+    <h2 class="section-label reveal" data-i18n="section-publications">Publications &amp; Research</h2>
+    <div class="projects-grid">
+
+      <article class="project-card reveal">
+        <h3 class="project-title" data-i18n="pub-paper-title">Course Paper</h3>
+        <p class="project-desc" data-i18n="pub-paper-desc">
+          Placeholder for a course paper or essay — e.g. a final paper for a physics or
+          mathematics course, typeset in LaTeX with figures and references.
+        </p>
+        <div class="project-tags">
+          <span class="tag highlight">LaTeX</span>
+          <span class="tag">Physics</span>
+          <span class="tag" data-i18n="tag-academic-writing">Academic Writing</span>
+        </div>
+      </article>
+
+      <article class="project-card reveal">
+        <h3 class="project-title" data-i18n="pub-lab-title">Lab Report</h3>
+        <p class="project-desc" data-i18n="pub-lab-desc">
+          Placeholder for a laboratory report — measurement data, error analysis,
+          uncertainty propagation, and discussion of systematic vs. statistical errors.
+        </p>
+        <div class="project-tags">
+          <span class="tag highlight">Data Analysis</span>
+          <span class="tag">Error Propagation</span>
+          <span class="tag">LaTeX</span>
+        </div>
+      </article>
+
+      <article class="project-card reveal">
+        <h3 class="project-title" data-i18n="pub-research-title">Research Note</h3>
+        <p class="project-desc" data-i18n="pub-research-desc">
+          Placeholder for a research note or short communication — preliminary results,
+          a literature synthesis, or a computational exploration written for discussion.
+        </p>
+        <div class="project-tags">
+          <span class="tag highlight">Research</span>
+          <span class="tag">Computation</span>
+          <span class="tag">LaTeX</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section>
+    <h2 class="section-label reveal" data-i18n="section-projects">Projects</h2>
+    <div class="projects-grid">
+
+      <article class="project-card reveal">
+        <h3 class="project-title" data-i18n="proj-orbit-title">Orbital Dynamics Simulator</h3>
+        <p class="project-desc" data-i18n="proj-orbit-desc">
+          A Python package for simulating N-body gravitational systems. Numerically
+          integrates equations of motion, renders trajectories, and computes conserved
+          quantities for validation.
+        </p>
+        <div class="project-tags">
+          <span class="tag highlight">Python</span>
+          <span class="tag">NumPy</span>
+          <span class="tag">Matplotlib</span>
+          <span class="tag">Orbital Mechanics</span>
+        </div>
+        <a class="project-link" href="#" data-i18n="proj-link-text">View on GitHub &nearr;</a>
+      </article>
+
+      <article class="project-card reveal">
+        <h3 class="project-title" data-i18n="proj-data-title">Data Analysis Toolkit</h3>
+        <p class="project-desc" data-i18n="proj-data-desc">
+          A collection of scripts and notebooks for statistical data analysis:
+          curve fitting, &chi;&sup2; goodness-of-fit tests, and publication-quality
+          figure generation.
+        </p>
+        <div class="project-tags">
+          <span class="tag highlight">Python</span>
+          <span class="tag">Jupyter</span>
+          <span class="tag">SciPy</span>
+          <span class="tag">Statistics</span>
+        </div>
+        <a class="project-link" href="#" data-i18n="proj-link-text">View on GitHub &nearr;</a>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section>
+    <h2 class="section-label reveal" data-i18n="section-skills">Skills</h2>
+    <div class="skills-cloud reveal">
+      <span class="skill-pill">Python</span>
+      <span class="skill-pill">NumPy / SciPy</span>
+      <span class="skill-pill" data-i18n="skill-data-analysis">Data Analysis</span>
+      <span class="skill-pill" data-i18n="skill-data-viz">Data Visualization</span>
+      <span class="skill-pill">LaTeX</span>
+      <span class="skill-pill" data-i18n="skill-orbital">Orbital Dynamics</span>
+      <span class="skill-pill" data-i18n="skill-stellar">Stellar Physics</span>
+      <span class="skill-pill" data-i18n="skill-linear-algebra">Linear Algebra</span>
+      <span class="skill-pill" data-i18n="skill-diff-eq">Differential Equations</span>
+      <span class="skill-pill" data-i18n="skill-numerical">Numerical Methods</span>
+      <span class="skill-pill" data-i18n="skill-classical-mech">Classical Mechanics</span>
+      <span class="skill-pill" data-i18n="skill-ed">Electrodynamics</span>
+      <span class="skill-pill" data-i18n="skill-stat-physics">Statistical Physics</span>
+      <span class="skill-pill" data-i18n="skill-observational">Observational Astronomy</span>
+      <span class="skill-pill" data-i18n="skill-bilingual">English &amp; Chinese</span>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact-section">
+    <h2 class="section-label reveal" data-i18n="section-contact">Contact</h2>
+    <div class="contact-row reveal">
+      <a class="contact-link" href="mailto:ljliang.li@mail.utoronto.ca">ljliang.li@mail.utoronto.ca</a>
+      <span class="contact-sep">&middot;</span>
+      <a class="contact-link" href="mailto:lijialiang0312@gmail.com">lijialiang0312@gmail.com</a>
+      <span class="contact-sep">&middot;</span>
+      <span data-i18n="contact-location">Beijing &amp; Toronto</span>
+      <span class="contact-sep">&middot;</span>
+      <a class="contact-link" href="#">GitHub</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" data-i18n="footer">
+  Jialiang Li &middot; University of Toronto &middot; Mathematics &amp; Astrophysics
+</footer>
+
+<script>
+  // ── i18n ──────────────────────────────────────────────
+  const i18n = {
+    en: {
+      'hero-tagline': 'Mathematics & Astrophysics @ University of Toronto',
+      'hero-bio': 'Double major in Mathematics and Astrophysics, minor in Physics. I work at the intersection of mathematical rigor and physical intuition — building computational models, analyzing data, and solving structured problems.',
+      'hero-cv': '↓ CV / Resume',
+      'section-about': 'About',
+      'about-p1': 'I am a third-year undergraduate at the University of Toronto, pursuing a double major in Mathematics and Astrophysics with a minor in Physics. My coursework spans calculus, linear algebra, ordinary and partial differential equations, linear and nonlinear optimization, number theory, group theory, classical mechanics, electrodynamics, thermodynamics and statistical physics, atmospheric physics, observational astronomy, stellar physics, and Python data analysis.',
+      'about-p2': 'I am fluent in English and Chinese, comfortable in both technical and everyday contexts. I bring a structured, careful approach to problem-solving — breaking complex problems into tractable pieces, translating theory into computation, and communicating results clearly.',
+      'section-experience': 'Experience',
+      'exp-astro-title': 'Astrophysical Computation & Modeling',
+      'exp-astro-desc': 'Course-based projects translating theoretical physics into computational models. Implemented orbital dynamics simulations, analyzed gravitational systems, and built numerical solvers for differential equations arising in stellar structure. Emphasis on converting mathematical formalism into clean, well-documented Python code with visualization and error analysis.',
+      'exp-spic-title': 'Product Center Intern — SPIC Hydrogen Energy',
+      'exp-spic-desc': 'Internship at the Product Center of State Power Investment Corporation (SPIC) Hydrogen Energy Technology Development Co., Ltd. Contributed to product development and technical coordination for hydrogen energy systems. Gained exposure to clean energy technology workflows, cross-team collaboration, and the practical challenges of bringing hydrogen-based solutions from R&D toward industrial deployment.',
+      'exp-skf-title': 'Technical Support Assistant — SKF Distributor, Shanghai',
+      'exp-skf-desc': 'Internship at the Beijing general agency for SKF, supporting lubrication system installation, commissioning, and fault diagnosis for industrial clients. Assisted the sales team with project tracking and compiled technical documentation. Developed practical troubleshooting skills and experience in a professional engineering environment.',
+      'exp-teach-title': 'Mathematics & English Instructor',
+      'exp-teach-desc': 'Taught Singapore Mathematics using the CPA (Concrete-Pictorial-Abstract) approach at an education company in Beijing. Also led English reading courses and taught Rubik\'s cube solving as a structured problem-solving exercise. Developed clear communication skills and the ability to break complex ideas into learnable steps.',
+      'section-publications': 'Publications & Research',
+      'pub-paper-title': 'Course Paper',
+      'pub-paper-desc': 'Placeholder for a course paper or essay — e.g. a final paper for a physics or mathematics course, typeset in LaTeX with figures and references.',
+      'pub-lab-title': 'Lab Report',
+      'pub-lab-desc': 'Placeholder for a laboratory report — measurement data, error analysis, uncertainty propagation, and discussion of systematic vs. statistical errors.',
+      'pub-research-title': 'Research Note',
+      'pub-research-desc': 'Placeholder for a research note or short communication — preliminary results, a literature synthesis, or a computational exploration written for discussion.',
+      'section-projects': 'Projects',
+      'proj-orbit-title': 'Orbital Dynamics Simulator',
+      'proj-orbit-desc': 'A Python package for simulating N-body gravitational systems. Numerically integrates equations of motion, renders trajectories, and computes conserved quantities for validation.',
+      'proj-data-title': 'Data Analysis Toolkit',
+      'proj-data-desc': 'A collection of scripts and notebooks for statistical data analysis: curve fitting, χ² goodness-of-fit tests, and publication-quality figure generation.',
+      'proj-link-text': 'View on GitHub ↗',
+      'section-skills': 'Skills',
+      'skill-data-analysis': 'Data Analysis',
+      'skill-data-viz': 'Data Visualization',
+      'skill-orbital': 'Orbital Dynamics',
+      'skill-stellar': 'Stellar Physics',
+      'skill-linear-algebra': 'Linear Algebra',
+      'skill-diff-eq': 'Differential Equations',
+      'skill-numerical': 'Numerical Methods',
+      'skill-classical-mech': 'Classical Mechanics',
+      'skill-ed': 'Electrodynamics',
+      'skill-stat-physics': 'Statistical Physics',
+      'skill-observational': 'Observational Astronomy',
+      'skill-bilingual': 'English & Chinese',
+      'section-contact': 'Contact',
+      'contact-location': 'Beijing & Toronto',
+      'footer': 'Jialiang Li · University of Toronto · Mathematics & Astrophysics',
+      'tag-hydrogen': 'Hydrogen Energy',
+      'tag-clean-energy': 'Clean Energy',
+      'tag-product-dev': 'Product Development',
+      'tag-tech-coord': 'Technical Coordination',
+      'tag-tech-support': 'Technical Support',
+      'tag-fault-diag': 'Fault Diagnosis',
+      'tag-industrial': 'Industrial Systems',
+      'tag-documentation': 'Documentation',
+      'tag-teaching': 'Teaching',
+      'tag-math-edu': 'Mathematics Education',
+      'tag-english': 'English',
+      'tag-academic-writing': 'Academic Writing',
+    },
+    zh: {
+      'hero-tagline': '多伦多大学 数学与天体物理',
+      'hero-bio': '数学与天体物理双主修，物理辅修。我在数学严谨与物理直觉的交汇处工作——建立计算模型、分析数据、求解结构化问题。',
+      'hero-cv': '↓ CV / 简历',
+      'section-about': '关于',
+      'about-p1': '我是多伦多大学大三学生，攻读数学与天体物理双主修、物理辅修。课程涵盖微积分、线性代数、常微分方程与偏微分方程、线性与非线性优化、数论、群论、经典力学、电动力学、热力学与统计物理、大气物理、观测天文学、恒星物理以及 Python 数据分析。',
+      'about-p2': '我精通中英双语，在技术和日常场景中均能自如交流。面对问题时，我习惯将其拆解为可处理的子问题，将理论转化为计算，并清晰地呈现结果——这是一种结构化、严谨的思维方式。',
+      'section-experience': '经历',
+      'exp-astro-title': '天体物理计算与建模',
+      'exp-astro-desc': '将理论物理转化为计算模型的课程项目。编写轨道动力学模拟、分析引力系统、构建恒星结构中微分方程的数值求解器。重点在于将数学形式化转化为清晰、文档完备的 Python 代码，并辅以可视化和误差分析。',
+      'exp-spic-title': '产品中心实习生 — 国家电投氢能科技',
+      'exp-spic-desc': '在国家电投集团氢能科技发展有限公司产品中心实习，参与氢能系统的产品开发与技术协调工作。深入了解清洁能源技术流程、跨团队协作，以及将氢能解决方案从研发推向工业应用的实际挑战。',
+      'exp-skf-title': '技术支持助理 — SKF 代理（上海润祥实业）',
+      'exp-skf-desc': '在 SKF 北京总代理实习，协助工业客户进行润滑系统的安装调试与故障诊断。配合销售团队跟进项目进度，整理产品技术资料。在专业工程环境中锻炼了实际的故障排除能力。',
+      'exp-teach-title': '数学与英文教师',
+      'exp-teach-desc': '在北京一家教育公司运用 CPA（具象-图形-抽象）教学法教授新加坡数学，并带领英文阅读课程、教授魔方作为结构化思维训练。锻炼了清晰的表达能力和将复杂概念分解为可学习步骤的技巧。',
+      'section-publications': '论文与研究',
+      'pub-paper-title': '课程论文',
+      'pub-paper-desc': '课程论文占位——例如物理或数学课程的期末论文，使用 LaTeX 排版，含图表与参考文献。',
+      'pub-lab-title': '实验报告',
+      'pub-lab-desc': '实验报告占位——测量数据、误差分析、不确定度传递，以及系统误差与统计误差的讨论。',
+      'pub-research-title': '研究笔记',
+      'pub-research-desc': '研究笔记占位——初步结果、文献综述或计算探索，以讨论而非正式发表为目的撰写。',
+      'section-projects': '代码项目',
+      'proj-orbit-title': '轨道动力学模拟器',
+      'proj-orbit-desc': '用于 N 体引力系统模拟的 Python 包。数值积分运动方程、绘制轨迹、计算守恒量验证模型。',
+      'proj-data-title': '数据分析工具集',
+      'proj-data-desc': '统计数据分析的脚本与笔记本集合：曲线拟合、χ² 拟合优度检验、出版级图表生成。',
+      'proj-link-text': '在 GitHub 上查看 ↗',
+      'section-skills': '技能',
+      'skill-data-analysis': '数据分析',
+      'skill-data-viz': '数据可视化',
+      'skill-orbital': '轨道动力学',
+      'skill-stellar': '恒星物理',
+      'skill-linear-algebra': '线性代数',
+      'skill-diff-eq': '微分方程',
+      'skill-numerical': '数值方法',
+      'skill-classical-mech': '经典力学',
+      'skill-ed': '电动力学',
+      'skill-stat-physics': '统计物理',
+      'skill-observational': '观测天文学',
+      'skill-bilingual': '中英双语',
+      'section-contact': '联系',
+      'contact-location': '北京 & 多伦多',
+      'footer': '李嘉良 · 多伦多大学 · 数学与天体物理',
+      'tag-hydrogen': '氢能',
+      'tag-clean-energy': '清洁能源',
+      'tag-product-dev': '产品开发',
+      'tag-tech-coord': '技术协调',
+      'tag-tech-support': '技术支持',
+      'tag-fault-diag': '故障诊断',
+      'tag-industrial': '工业系统',
+      'tag-documentation': '技术文档',
+      'tag-teaching': '教学',
+      'tag-math-edu': '数学教育',
+      'tag-english': '英语',
+      'tag-academic-writing': '学术写作',
+    }
+  };
+
+  let lang = localStorage.getItem('lang') || 'en';
+  const toggle = document.getElementById('langToggle');
+
+  function applyLang(l) {
+    lang = l;
+    document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
+    toggle.textContent = l === 'zh' ? 'EN' : '中文';
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (i18n[l][key] != null) el.innerHTML = i18n[l][key];
+    });
+    localStorage.setItem('lang', l);
+  }
+
+  toggle.addEventListener('click', () => applyLang(lang === 'en' ? 'zh' : 'en'));
+
+  // Apply saved language on load (before reveal so content is settled)
+  if (lang !== 'en') applyLang(lang);
+
+  // ── Scroll reveal ────────────────────────────────────
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const delay = entry.target.dataset.delay || 0;
+        setTimeout(() => entry.target.classList.add('visible'), delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+
+  document.querySelectorAll('.projects-grid').forEach(grid => {
+    grid.querySelectorAll('.reveal').forEach((el, i) => { el.dataset.delay = i * 60; });
+  });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
