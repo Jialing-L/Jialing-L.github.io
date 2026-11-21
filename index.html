@@ -1,752 +1,260 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jialiang Li — Mathematics &amp; Physics @ U of T</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@350;400;500&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jialiang Li | Data & Quantitative Analysis | University of Toronto ’27</title>
+<meta name="description" content="Jialiang Li — University of Toronto HBSc candidate, Physics major with Astrophysics and Mathematics minors. Python, SQL, data analysis, and market research. Seeking 2027 graduate roles in Canada.">
+<meta property="og:title" content="Jialiang Li | Data & Quantitative Analysis">
+<meta property="og:description" content="Explore real Python analysis projects and market research experience. University of Toronto HBSc candidate, Class of 2027.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jialing-l.github.io/">
+<meta name="theme-color" content="#0b0b10">
+<link rel="canonical" href="https://jialing-l.github.io/">
 <style>
-  :root {
-    --bg: #0b0b10;
-    --surface: #14141c;
-    --surface-elevated: #1a1a24;
-    --text: #e4e4ec;
-    --text-muted: #8e8e9e;
-    --text-faint: #5e5e6e;
-    --accent: #c4a060;
-    --accent-dim: rgba(196, 160, 96, 0.12);
-    --border: #1e1e2a;
-    --border-light: #262634;
-    --radius: 6px;
-    --radius-lg: 10px;
-    --max-w: 680px;
-    --gap-xs: 6px;
-    --gap-sm: 14px;
-    --gap: 24px;
-    --gap-lg: 48px;
-    --gap-xl: 80px;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  /* Selection */
-  ::selection { background: rgba(196, 160, 96, 0.28); color: var(--text); }
-
-  /* Scroll animation */
-  .reveal {
-    opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
-                transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  /* Layout */
-  .container {
-    max-width: var(--max-w);
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-
-  section { padding: var(--gap-xl) 0; }
-
-  /* ---- Hero ---- */
-  .hero {
-    padding: 120px 0 60px;
-    position: relative;
-  }
-  .hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(196, 160, 96, 0.04), transparent),
-      radial-gradient(ellipse 60% 40% at 80% 20%, rgba(120, 140, 200, 0.03), transparent);
-    pointer-events: none;
-  }
-  .hero-name {
-    font-family: "Crimson Text", "Garamond", "Georgia", "Times New Roman", serif;
-    font-size: clamp(38px, 6vw, 56px);
-    font-weight: 400;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-    color: #f0f0f6;
-    margin-bottom: 10px;
-  }
-  .hero-tagline {
-    font-size: 15px;
-    color: var(--text-muted);
-    font-weight: 400;
-    letter-spacing: 0.01em;
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .hero-tagline::before {
-    content: "";
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--accent);
-    opacity: 0.5;
-  }
-  .hero-bio {
-    font-size: 16px;
-    color: var(--text-muted);
-    max-width: 540px;
-    line-height: 1.65;
-  }
-  .hero-cv {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 22px;
-    padding: 7px 18px;
-    font-size: 13px;
-    font-weight: 500;
-    font-family: "Inter", system-ui, sans-serif;
-    color: var(--accent);
-    border: 1px solid rgba(196, 160, 96, 0.3);
-    border-radius: 20px;
-    text-decoration: none;
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.02em;
-  }
-  .hero-cv:hover { background: var(--accent-dim); border-color: var(--accent); }
-  .hero-cv-icon { font-size: 15px; }
-
-  /* ---- Section headings ---- */
-  .section-label {
-    font-family: "Crimson Text", "Garamond", "Georgia", "Times New Roman", serif;
-    font-size: 13px;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--text-faint);
-    margin-bottom: 28px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .section-label::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  /* ---- About ---- */
-  .about-text {
-    font-size: 15px;
-    color: var(--text-muted);
-    max-width: 620px;
-  }
-  .about-text p + p { margin-top: 14px; }
-
-  /* ---- Projects ---- */
-  .projects-grid {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap);
-  }
-  .project-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 28px 30px;
-    transition: border-color 0.25s, background 0.25s;
-    position: relative;
-    overflow: hidden;
-  }
-  .project-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 100% 100% at 0% 0%, var(--accent-dim), transparent 70%);
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
-  }
-  .project-card:hover {
-    border-color: var(--border-light);
-    background: var(--surface-elevated);
-  }
-  .project-card:hover::before { opacity: 1; }
-  .project-card > * { position: relative; z-index: 1; }
-  .project-title {
-    font-family: "Crimson Text", "Garamond", "Georgia", "Times New Roman", serif;
-    font-size: 20px;
-    font-weight: 400;
-    margin-bottom: 8px;
-    color: #f0f0f6;
-  }
-  .project-desc {
-    font-size: 14px;
-    color: var(--text-muted);
-    line-height: 1.6;
-    margin-bottom: 16px;
-  }
-  .project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--gap-xs);
-  }
-  .tag {
-    display: inline-block;
-    padding: 3px 10px;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.03em;
-    border-radius: 3px;
-    background: rgba(255, 255, 255, 0.04);
-    color: var(--text-muted);
-    border: 1px solid var(--border);
-  }
-  .tag.highlight { color: var(--accent); border-color: rgba(196, 160, 96, 0.2); background: var(--accent-dim); }
-
-  .project-link {
-    display: inline-block;
-    margin-top: 14px;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-faint);
-    text-decoration: none;
-    letter-spacing: 0.02em;
-    transition: color 0.2s;
-  }
-  .project-link:hover { color: var(--accent); }
-
-  /* ---- Skills ---- */
-  .skills-cloud {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  .skill-pill {
-    padding: 6px 16px;
-    font-size: 13px;
-    font-weight: 450;
-    border-radius: 20px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    transition: all 0.2s;
-    cursor: default;
-    letter-spacing: 0.01em;
-  }
-  .skill-pill:hover {
-    border-color: var(--accent);
-    color: var(--text);
-    background: var(--surface-elevated);
-  }
-
-  /* ---- Contact ---- */
-  .contact-section {
-    padding-bottom: 100px;
-  }
-  .contact-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--gap-sm);
-    align-items: center;
-    font-size: 14px;
-    color: var(--text-muted);
-  }
-  .contact-link {
-    color: var(--text-muted);
-    text-decoration: none;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 1px;
-    transition: color 0.2s, border-color 0.2s;
-  }
-  .contact-link:hover { color: var(--accent); border-color: var(--accent); }
-  .contact-sep { color: var(--text-faint); user-select: none; }
-
-  /* ---- Footer ---- */
-  .site-footer {
-    text-align: center;
-    padding: 32px 0;
-    font-size: 12px;
-    color: var(--text-faint);
-    letter-spacing: 0.02em;
-  }
-
-  /* ---- Lang Toggle ---- */
-  .lang-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 100;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    font-size: 12px;
-    font-family: "Inter", system-ui, sans-serif;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    padding: 6px 14px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.2s;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-  .lang-toggle:hover { border-color: var(--accent); color: var(--accent); }
-
-  /* ---- Background decoration ---- */
-  .bg-grid {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: -1;
-    opacity: 0.3;
-    background-image:
-      linear-gradient(var(--border) 1px, transparent 1px),
-      linear-gradient(90deg, var(--border) 1px, transparent 1px);
-    background-size: 64px 64px;
-    mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 30%, transparent 70%);
-    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 30%, transparent 70%);
-  }
-
-  /* ---- Mobile ---- */
-  @media (max-width: 600px) {
-    .hero { padding: 80px 0 40px; }
-    section { padding: 52px 0; }
-    .container { padding: 0 18px; }
-    .project-card { padding: 22px 20px; }
-    :root {
-      --gap-xl: 52px;
-    }
-  }
+:root{--bg:#0b0b10;
+--surface:#14141c;
+--text:#f0f0f6;
+--muted:#b0b0be;
+--accent:#d5b375;
+--line:#30303b;
+--teal:#74dbcf}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.7}a{color:inherit;text-underline-offset:5px}a:hover{color:var(--accent)}button{font:inherit}button,a,summary{-webkit-tap-highlight-color:transparent}a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--teal);outline-offset:6px}header{border-bottom:1px solid var(--line);background:rgba(11,11,16,.96);position:sticky;top:0;z-index:5}nav{max-width:1120px;margin:auto;padding:20px 32px;display:flex;align-items:center;gap:26px}nav .brand{font-family:Georgia,serif;font-size:24px;text-decoration:none;margin-right:auto}nav a{font-size:14px;text-decoration:none}#langToggle{border:1px solid var(--line);color:var(--text);background:transparent;padding:5px 12px;border-radius:20px;cursor:pointer;font-size:14px}.wrap{max-width:1120px;margin:auto;padding:0 32px}.hero{padding:90px 0 75px;display:grid;grid-template-columns:1.55fr 1fr;gap:70px;align-items:center}.eyebrow,.label{font-size:14px;letter-spacing:.15em;color:var(--accent);font-weight:500}.hero h1{font:normal clamp(44px,6.4vw,78px)/1.12 Georgia,serif;letter-spacing:-.045em;margin:24px 0 28px}em{font-weight:normal;color:var(--accent)}.lead{color:var(--muted);max-width:640px}.status{font-size:16px;color:var(--teal);margin:26px 0 0}.focus{font-size:14px;color:var(--muted);margin-top:5px}.actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:11px 20px;border:1px solid var(--line);border-radius:5px;font-size:14px;text-decoration:none}.btn.primary{background:var(--accent);color:#111116;border-color:var(--accent);font-weight:600}.edu{padding:30px;border:1px solid var(--line);border-radius:8px;position:relative;background:linear-gradient(140deg,#1c1b22,#101018);overflow:hidden}.edu svg{width:100%;height:100px;margin:20px 0 5px}.edu .uni{font:28px/1.25 Georgia,serif;margin:18px 0 12px}.edu p{margin:8px 0;color:var(--muted)}.edu .date{font-size:14px;border-top:1px solid var(--line);padding-top:18px;margin-top:22px}section{padding:68px 0;border-top:1px solid var(--line)}h2{font:normal clamp(32px,4vw,44px)/1.2 Georgia,serif;letter-spacing:-.025em;margin:16px 0 20px}h3{font:normal 27px/1.25 Georgia,serif;margin:12px 0}p{margin:14px 0}.sub{color:var(--muted);margin-bottom:34px}.projects{display:grid;grid-template-columns:1fr 1fr;gap:24px}.card{border:1px solid var(--line);border-radius:8px;background:var(--surface);overflow:hidden}.card img{width:100%;height:auto;display:block;background:white}.card .content{padding:26px}.course{font-size:14px;color:var(--accent);letter-spacing:.05em}.card p{color:var(--muted)}.metric{font-size:25px;font-weight:500;color:var(--teal);margin-top:22px}.note{font-size:14px;color:var(--muted)}.tags{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.tags span{font-size:14px;padding:2px 10px;border:1px solid var(--line);border-radius:20px;color:var(--muted)}details{border-top:1px solid var(--line);padding-top:18px}summary{cursor:pointer;color:var(--accent);font-size:14px}details p{font-size:16px}.wide{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr}.wide img{height:100%;object-fit:contain}.exp-layout{display:grid;grid-template-columns:1fr 1.5fr;gap:60px}.exp-box{border-left:2px solid var(--accent);padding-left:28px}.exp-box .company{font-size:20px}.date{font-size:14px;color:var(--muted)}ul{padding-left:20px;color:var(--muted)}li{margin:10px 0}.additional{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:42px}.additional h3{font:20px/1.4 Inter,system-ui,sans-serif}.additional p{color:var(--muted)}.toolkit{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:32px}.toolkit h3{font:18px/1.4 Inter,system-ui,sans-serif;color:var(--accent)}.toolkit p{color:var(--muted)}.contact{padding-bottom:80px}.contact h2{font-size:clamp(36px,5vw,58px)}.contact p{max-width:690px;color:var(--muted)}footer{border-top:1px solid var(--line);padding:26px 0;font-size:14px;color:var(--muted)}footer .wrap{display:flex;justify-content:space-between;gap:20px}.skip{position:absolute;left:20px;top:-100px}.skip:focus{top:10px;z-index:10;background:var(--bg);padding:10px}
+html[lang=zh-CN] h1,html[lang=zh-CN] h2{line-height:1.4}@media(max-width:760px){nav{padding:15px 20px;gap:15px}nav a{font-size:14px}nav .brand{font-size:21px}.wrap{padding:0 22px}.hero{grid-template-columns:1fr;gap:34px;padding:52px 0}.hero h1{font-size:51px}.edu{padding:24px}.edu svg{display:none}.projects,.exp-layout,.additional,.toolkit,.wide{grid-template-columns:1fr}.exp-layout{gap:22px}.wide{display:block}section{padding:48px 0}.card .content{padding:23px}footer .wrap{flex-direction:column;gap:6px}}@media(max-width:400px){nav{gap:10px}nav a{font-size:13px}.hero h1{font-size:44px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-
-<div class="bg-grid"></div>
-
-<button class="lang-toggle reveal" id="langToggle" aria-label="Switch language">中文</button>
-
-<main class="container">
-
-  <!-- Hero -->
-  <section class="hero">
-    <h1 class="hero-name reveal">Jialiang Li</h1>
-    <p class="hero-tagline reveal" data-i18n="hero-tagline">Mathematics &amp; Physics @ University of Toronto</p>
-    <p class="hero-bio reveal" data-i18n="hero-bio">
-      Double major in Mathematics and Physics.
-      I work at the intersection of mathematical rigor and physical intuition —
-      building computational models, analyzing data, and solving structured problems.
-    </p>
-    <a class="hero-cv reveal" href="Jialiang_Li_Resume.pdf" data-i18n="hero-cv">
-      <span class="hero-cv-icon">&#8595;</span> CV / 简历
-    </a>
-  </section>
-
-  <!-- About -->
-  <section>
-    <h2 class="section-label reveal" data-i18n="section-about">About</h2>
-    <div class="about-text reveal">
-      <p data-i18n="about-p1">
-        I am a third-year undergraduate at the University of Toronto, pursuing a
-        double major in Mathematics and Physics.
-        My coursework spans calculus, linear algebra, ordinary and partial differential
-        equations, classical mechanics, electromagnetism, thermodynamics and statistical
-        physics, probability theory, numerical methods, observational astronomy, stellar
-        physics, and Python data analysis.
-      </p>
-      <p data-i18n="about-p2">
-        Fluent in English and a native Mandarin Chinese speaker, comfortable in
-        multicultural environments with 6+ years of experience studying abroad.
-        I bring a structured, careful approach to problem-solving — breaking complex
-        problems into tractable pieces, translating theory into computation, and
-        communicating results clearly.
-      </p>
-    </div>
-  </section>
-
-  <!-- Experience -->
-  <section>
-    <h2 class="section-label reveal" data-i18n="section-experience">Experience</h2>
-    <div class="projects-grid">
-
-      <article class="project-card reveal">
-        <h3 class="project-title" data-i18n="exp-astro-title">Astrophysical Computation &amp; Modeling</h3>
-        <p class="project-desc" data-i18n="exp-astro-desc">
-          Course-based projects translating theoretical physics into computational models.
-          Implemented orbital dynamics simulations, analyzed gravitational systems, and
-          built numerical solvers for differential equations arising in stellar structure.
-          Emphasis on converting mathematical formalism into clean, well-documented Python
-          code with visualization and error analysis.
-        </p>
-        <div class="project-tags">
-          <span class="tag highlight">Python</span>
-          <span class="tag highlight">Orbital Dynamics</span>
-          <span class="tag">Numerical Methods</span>
-          <span class="tag">Data Visualization</span>
-          <span class="tag">Differential Equations</span>
-        </div>
-      </article>
-
-      <article class="project-card reveal">
-        <h3 class="project-title"><span data-i18n="exp-spic-title">Product Center Intern &mdash; SPIC Hydrogen Energy</span> <span style="font-size:13px;color:var(--text-faint);font-family:Inter,sans-serif;font-weight:350;">2026.05 &ndash; 07</span></h3>
-        <p class="project-desc" data-i18n="exp-spic-desc">
-          Internship at the Product Center of State Power Investment Corporation (SPIC)
-          Hydrogen Energy Technology Development Co., Ltd. Contributed to product development
-          and technical coordination for hydrogen energy systems. Gained exposure to clean
-          energy technology workflows, cross-team collaboration, and the practical challenges
-          of bringing hydrogen-based solutions from R&amp;D toward industrial deployment.
-        </p>
-        <div class="project-tags">
-          <span class="tag highlight" data-i18n="tag-hydrogen">Hydrogen Energy</span>
-          <span class="tag highlight" data-i18n="tag-clean-energy">Clean Energy</span>
-          <span class="tag" data-i18n="tag-product-dev">Product Development</span>
-          <span class="tag" data-i18n="tag-tech-coord">Technical Coordination</span>
-          <span class="tag">R&amp;D</span>
-        </div>
-      </article>
-
-      <article class="project-card reveal">
-        <h3 class="project-title" data-i18n="exp-skf-title">Technical Support Assistant &mdash; SKF Distributor, Shanghai</h3>
-        <p class="project-desc" data-i18n="exp-skf-desc">
-          Internship at the Beijing general agency for SKF, supporting lubrication system
-          installation, commissioning, and fault diagnosis for industrial clients.
-          Assisted the sales team with project tracking and compiled technical documentation.
-          Developed practical troubleshooting skills and experience in a professional
-          engineering environment.
-        </p>
-        <div class="project-tags">
-          <span class="tag highlight" data-i18n="tag-tech-support">Technical Support</span>
-          <span class="tag" data-i18n="tag-fault-diag">Fault Diagnosis</span>
-          <span class="tag" data-i18n="tag-industrial">Industrial Systems</span>
-          <span class="tag" data-i18n="tag-documentation">Documentation</span>
-        </div>
-      </article>
-
-      <article class="project-card reveal">
-        <h3 class="project-title" data-i18n="exp-teach-title">Mathematics &amp; English Instructor</h3>
-        <p class="project-desc" data-i18n="exp-teach-desc">
-          Taught Singapore Mathematics using the CPA (Concrete-Pictorial-Abstract) approach
-          at an education company in Beijing. Also led English reading courses and taught
-          Rubik's cube solving as a structured problem-solving exercise. Developed clear
-          communication skills and the ability to break complex ideas into learnable steps.
-        </p>
-        <div class="project-tags">
-          <span class="tag highlight" data-i18n="tag-teaching">Teaching</span>
-          <span class="tag highlight">CPA Methodology</span>
-          <span class="tag" data-i18n="tag-math-edu">Mathematics Education</span>
-          <span class="tag" data-i18n="tag-english">English</span>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- Publications -->
-  <section>
-    <h2 class="section-label reveal" data-i18n="section-publications">Publications &amp; Research</h2>
-    <div class="projects-grid">
-
-      <article class="project-card reveal">
-        <h3 class="project-title" data-i18n="pub-paper-title">Course Paper</h3>
-        <p class="project-desc" data-i18n="pub-paper-desc">
-          Placeholder for a course paper or essay — e.g. a final paper for a physics or
-          mathematics course, typeset in LaTeX with figures and references.
-        </p>
-        <div class="project-tags">
-          <span class="tag highlight">LaTeX</span>
-          <span class="tag">Physics</span>
-          <span class="tag" data-i18n="tag-academic-writing">Academic Writing</span>
-        </div>
-      </article>
-
-      <article class="project-card reveal">
-        <h3 class="project-title" data-i18n="pub-lab-title">Lab Report</h3>
-        <p class="project-desc" data-i18n="pub-lab-desc">
-          Placeholder for a laboratory report — measurement data, error analysis,
-          uncertainty propagation, and discussion of systematic vs. statistical errors.
-        </p>
-        <div class="project-tags">
-          <span class="tag highlight">Data Analysis</span>
-          <span class="tag">Error Propagation</span>
-          <span class="tag">LaTeX</span>
-        </div>
-      </article>
-
-      <article class="project-card reveal">
-        <h3 class="project-title" data-i18n="pub-research-title">Research Note</h3>
-        <p class="project-desc" data-i18n="pub-research-desc">
-          Placeholder for a research note or short communication — preliminary results,
-          a literature synthesis, or a computational exploration written for discussion.
-        </p>
-        <div class="project-tags">
-          <span class="tag highlight">Research</span>
-          <span class="tag">Computation</span>
-          <span class="tag">LaTeX</span>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- Projects -->
-  <section>
-    <h2 class="section-label reveal" data-i18n="section-projects">Projects</h2>
-    <div class="projects-grid">
-
-      <article class="project-card reveal">
-        <h3 class="project-title" data-i18n="proj-orbit-title">Orbital Dynamics Simulator</h3>
-        <p class="project-desc" data-i18n="proj-orbit-desc">
-          A Python package for simulating N-body gravitational systems. Numerically
-          integrates equations of motion, renders trajectories, and computes conserved
-          quantities for validation.
-        </p>
-        <div class="project-tags">
-          <span class="tag highlight">Python</span>
-          <span class="tag">NumPy</span>
-          <span class="tag">Matplotlib</span>
-          <span class="tag">Orbital Mechanics</span>
-        </div>
-        <a class="project-link" href="#" data-i18n="proj-link-text">View on GitHub &nearr;</a>
-      </article>
-
-      <article class="project-card reveal">
-        <h3 class="project-title" data-i18n="proj-data-title">Data Analysis Toolkit</h3>
-        <p class="project-desc" data-i18n="proj-data-desc">
-          A collection of scripts and notebooks for statistical data analysis:
-          curve fitting, &chi;&sup2; goodness-of-fit tests, and publication-quality
-          figure generation.
-        </p>
-        <div class="project-tags">
-          <span class="tag highlight">Python</span>
-          <span class="tag">Jupyter</span>
-          <span class="tag">SciPy</span>
-          <span class="tag">Statistics</span>
-        </div>
-        <a class="project-link" href="#" data-i18n="proj-link-text">View on GitHub &nearr;</a>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- Skills -->
-  <section>
-    <h2 class="section-label reveal" data-i18n="section-skills">Skills</h2>
-    <div class="skills-cloud reveal">
-      <span class="skill-pill">Python</span>
-      <span class="skill-pill">NumPy / SciPy</span>
-      <span class="skill-pill" data-i18n="skill-data-analysis">Data Analysis</span>
-      <span class="skill-pill" data-i18n="skill-data-viz">Data Visualization</span>
-      <span class="skill-pill">LaTeX</span>
-      <span class="skill-pill" data-i18n="skill-orbital">Orbital Dynamics</span>
-      <span class="skill-pill" data-i18n="skill-stellar">Stellar Physics</span>
-      <span class="skill-pill" data-i18n="skill-linear-algebra">Linear Algebra</span>
-      <span class="skill-pill" data-i18n="skill-diff-eq">Differential Equations</span>
-      <span class="skill-pill" data-i18n="skill-numerical">Numerical Methods</span>
-      <span class="skill-pill" data-i18n="skill-classical-mech">Classical Mechanics</span>
-      <span class="skill-pill" data-i18n="skill-ed">Electrodynamics</span>
-      <span class="skill-pill" data-i18n="skill-stat-physics">Statistical Physics</span>
-      <span class="skill-pill" data-i18n="skill-observational">Observational Astronomy</span>
-      <span class="skill-pill" data-i18n="skill-bilingual">English &amp; Chinese</span>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section class="contact-section">
-    <h2 class="section-label reveal" data-i18n="section-contact">Contact</h2>
-    <div class="contact-row reveal">
-      <a class="contact-link" href="mailto:ljliang.li@mail.utoronto.ca">ljliang.li@mail.utoronto.ca</a>
-      <span class="contact-sep">&middot;</span>
-      <a class="contact-link" href="mailto:lijialiang0312@gmail.com">lijialiang0312@gmail.com</a>
-      <span class="contact-sep">&middot;</span>
-      <span data-i18n="contact-location">Beijing &amp; Toronto</span>
-      <span class="contact-sep">&middot;</span>
-      <a class="contact-link" href="#">GitHub</a>
-    </div>
-  </section>
-
+<a class="skip" href="#main">Skip to content</a>
+<header>
+<nav aria-label="Main navigation">
+<a class="brand" href="#main">Jialiang Li</a>
+<a href="#work">
+<span data-i18n="nav-work" >Selected work</span>
+</a>
+<a href="#experience">
+<span data-i18n="nav-exp" >Experience</span>
+</a>
+<a href="#contact">
+<span data-i18n="nav-contact" >Contact</span>
+</a>
+<button id="langToggle" aria-label="Switch language to Chinese">中文</button>
+</nav>
+</header>
+<main id="main" class="wrap">
+<div class="hero">
+<div>
+<div data-i18n="eyebrow" class="eyebrow">PHYSICS BACKGROUND. ANALYTICAL MINDSET.</div>
+<h1 data-i18n="hero" >Turning data into<br>
+<em>clear insight.</em>
+</h1>
+<p data-i18n="intro" class="lead">I’m Jialiang Li, a final-year Honours Bachelor of Science candidate at the University of Toronto. I connect quantitative analysis, experimental work, and market research to make complex questions easier to understand.</p>
+<p data-i18n="status" class="status">Seeking 2027 new-graduate opportunities in Canada</p>
+<p data-i18n="focus" class="focus">Data analytics · Business & operations analysis · Technology consulting</p>
+<div class="actions">
+<a class="btn primary" href="#work">
+<span data-i18n="work-cta" >Explore my work</span>
+</a>
+<a class="btn" href="https://www.linkedin.com/in/jialiang-li-8a3243415/">LinkedIn</a>
+<a class="btn" href="#contact">
+<span data-i18n="contact-cta" >Get in touch</span>
+</a>
+</div>
+</div>
+<aside class="edu" aria-label="Education summary">
+<div data-i18n="edu-label" class="label">EDUCATION</div>
+<p class="uni">University of Toronto</p>
+<p data-i18n="edu-degree" >Honours Bachelor of Science</p>
+<p data-i18n="edu-major" >Physics major<br>Astrophysics & Mathematics minors</p>
+<svg viewBox="0 0 360 110" fill="none" aria-hidden="true">
+<path d="M0 57H360M0 90H360M0 24H360" stroke="#30303b"/>
+<path d="M0 55C30 55 35 10 55 10S76 100 96 100S118 30 140 30S164 78 187 78S215 43 240 43S274 62 302 58S337 50 360 52" stroke="#74dbcf" stroke-width="2"/>
+</svg>
+<p data-i18n="edu-date" class="date">Expected coursework completion · April 2027</p>
+</aside>
+</div>
+<section id="work">
+<div data-i18n="work-label" class="label">SELECTED WORK</div>
+<h2 data-i18n="work-title" >A closer look at the analysis.</h2>
+<p data-i18n="work-sub" class="sub">Real coursework, real measurements, and the reasoning behind the result.</p>
+<div class="projects">
+<article class="card">
+<a href="assets/ast325-cell-6-1.png" aria-label="View experimental block-power chart at full size">
+<img src="assets/ast325-cell-6-1.png" width="890" height="390" alt="Block-power chart showing a brief transient at the start, followed by stable measured power">
+</a>
+<div class="content">
+<div class="course">AST325 · EXPERIMENTAL DATA ANALYSIS</div>
+<h3 data-i18n="signal-title" >Finding a startup transient</h3>
+<p data-i18n="signal-desc" >Collected experimental data and analyzed a one-million-sample instrument recording. Block-power visualization revealed a short startup transient that distorted the overall scatter.</p>
+<div data-i18n="signal-metric" class="metric">1,000,000 samples</div>
+<div data-i18n="signal-note" class="note">19.52% → 4.71% relative scatter after excluding the first 10 ms</div>
+<div class="tags">
+<span>Python</span>
+<span>NumPy / SciPy</span>
+<span>Matplotlib</span>
+</div>
+<details>
+<summary data-i18n="signal-details" >Read the analysis</summary>
+<div data-i18n="signal-body" >
+<p>
+<strong>Question.</strong> Does the measured noise agree with the expected statistical behavior?</p>
+<p>
+<strong>Method.</strong> Checked sample counts, ADC range and clipping; calculated power in blocks of 1,000 samples; compared the stable portion with the ideal radiometer prediction.</p>
+<p>
+<strong>Result.</strong> After excluding the initial 10 ms, relative scatter was 4.71%, compared with an ideal prediction of 4.47%. A longer recording was split into 9,951 segments for averaged FFT power-spectrum analysis.</p>
+<p>
+<strong>Takeaway.</strong> Check data quality and transient behavior before interpreting an aggregate statistic. These are results from an academic laboratory setup.</p>
+</div>
+</details>
+</div>
+</article>
+<article class="card">
+<a href="assets/sp500-time-series.png" aria-label="View S and P 500 time-series chart at full size">
+<img src="assets/sp500-time-series.png" width="1190" height="490" alt="S and P 500 opening values with a smooth Fourier-filtered curve and visible endpoint artifacts">
+</a>
+<div class="content">
+<div class="course">PHY407 · TIME-SERIES EXPLORATION</div>
+<h3 data-i18n="stock-title" >Separating trend from fluctuation</h3>
+<p data-i18n="stock-desc" >Loaded S&P 500 opening values from CSV and compared the original time series with an FFT-filtered view of long-term variation.</p>
+<div data-i18n="stock-metric" class="metric">126 business days</div>
+<div data-i18n="stock-note" class="note">Retained variations with longer periods</div>
+<div class="tags">
+<span>Python</span>
+<span>FFT</span>
+<span>Visualization</span>
+</div>
+<details>
+<summary data-i18n="signal-details" >Read the analysis</summary>
+<div data-i18n="stock-body" >
+<p>
+<strong>Method.</strong> Used NumPy FFT and inverse FFT to retain variations with periods longer than 126 business days. Plotted the raw and filtered series together for comparison.</p>
+<p>
+<strong>Validation.</strong> The unfiltered FFT round-trip reconstruction had a maximum absolute error of approximately 5 × 10<sup>−12</sup> index points.</p>
+<p>
+<strong>Limitations.</strong> FFT assumes periodic repetition. The mismatch between the beginning and end creates endpoint artifacts. This is exploratory historical-data analysis, not a forecasting or trading model.</p>
+</div>
+</details>
+</div>
+</article>
+<article class="card wide">
+<img src="assets/camera-calibration.png" width="690" height="390" loading="lazy" alt="Photon transfer curve showing pixel variance versus mean signal and a fitted regression line">
+<div class="content">
+<div class="course">AST325 · MEASUREMENT & STATISTICS</div>
+<h3 data-i18n="camera-title" >Calibrating a camera with statistics</h3>
+<p data-i18n="camera-desc" >Processed 30-frame image sequences and fitted variance–mean relationships across 999 retained pixels to estimate camera gain and read noise.</p>
+<p data-i18n="camera-note" class="note">Regression · Uncertainty estimation · Measurement quality</p>
+<p class="note">AST325 · Camera characterization & photon statistics.</p>
+</div>
+</article>
+</div>
+</section>
+<section id="experience">
+<div data-i18n="exp-label" class="label">EXPERIENCE</div>
+<div class="exp-layout">
+<h2 data-i18n="exp-title" >Technical depth.<br>Practical perspective.</h2>
+<article class="exp-box">
+<div class="company">SPIC Hydrogen Energy</div>
+<h3 data-i18n="spic-role" >Product Center Intern</h3>
+<p data-i18n="spic-date" class="date">May–July 2026 · Beijing</p>
+<ul data-i18n="spic-body" >
+<li>Analyzed the hydrogen-powered UAV market across market structure, technology, and pricing.</li>
+<li>Produced a structured competitive analysis report with strategic product recommendations.</li>
+<li>Compared fuel-cell specifications to support product positioning.</li>
+</ul>
+<div class="tags">
+<span>Market research</span>
+<span>Competitive analysis</span>
+<span>Product positioning</span>
+</div>
+</article>
+</div>
+<div class="additional">
+<article>
+<div data-i18n="other-label" class="label">ADDITIONAL EXPERIENCE</div>
+<h3 data-i18n="skf-title" >Technical support · SKF distributor</h3>
+<p data-i18n="skf-desc" >Supported lubrication-system installation, commissioning, and fault diagnosis; assisted with project tracking and technical documentation.</p>
+</article>
+<article>
+<div data-i18n="other-label" class="label">ADDITIONAL EXPERIENCE</div>
+<h3 data-i18n="teach-title" >Mathematics & English instruction</h3>
+<p data-i18n="teach-desc" >Taught mathematics using the Concrete–Pictorial–Abstract approach, led English reading, and broke complex ideas into learnable steps.</p>
+</article>
+</div>
+</section>
+<section>
+<div data-i18n="skills-label" class="label">TOOLKIT</div>
+<h2 data-i18n="skills-title" >Tools are useful.<br>Reasoning makes them count.</h2>
+<div class="toolkit">
+<div>
+<h3 data-i18n="skills-code" >Programming & analysis</h3>
+<p>Python · SQL · MATLAB<br>NumPy · SciPy · Matplotlib<br>Jupyter · LaTeX</p>
+</div>
+<div>
+<h3 data-i18n="skills-method" >Methods</h3>
+<p data-i18n="skills-method-list" >Statistical analysis · Regression · Uncertainty estimation · Fourier analysis · Numerical methods</p>
+</div>
+<div>
+<h3 data-i18n="skills-business" >Research & communication</h3>
+<p data-i18n="skills-business-list" >Competitive research · Technical comparison · Data visualization · English & Mandarin</p>
+</div>
+</div>
+</section>
+<section id="contact" class="contact">
+<div data-i18n="contact-label" class="label">LET’S CONNECT</div>
+<h2 data-i18n="contact-title" >A quantitative background.<br>A practical next step.</h2>
+<p data-i18n="contact-desc" >I’m looking for new-graduate and entry-level roles in Canada where data, research, and clear communication support better decisions. Expected coursework completion: April 2027.</p>
+<div class="actions">
+<a class="btn primary" href="mailto:ljliang.li@mail.utoronto.ca">Email me</a>
+<a class="btn" href="https://www.linkedin.com/in/jialiang-li-8a3243415/">LinkedIn</a>
+<a class="btn" href="https://github.com/Jialing-L">GitHub</a>
+</div>
+<p>
+<a href="mailto:ljliang.li@mail.utoronto.ca">ljliang.li@mail.utoronto.ca</a>
+</p>
+</section>
 </main>
-
-<footer class="site-footer" data-i18n="footer">
-  Jialiang Li &middot; University of Toronto &middot; Mathematics &amp; Physics
+<footer>
+<div class="wrap">
+<span>Jialiang Li · University of Toronto</span>
+<span data-i18n="footer" >Toronto, Canada · Updated November 2026</span>
+</div>
 </footer>
-
 <script>
-  // ── i18n ──────────────────────────────────────────────
-  const i18n = {
-    en: {
-      'hero-tagline': 'Mathematics & Physics @ University of Toronto',
-      'hero-bio': 'Double major in Mathematics and Physics. I work at the intersection of mathematical rigor and physical intuition — building computational models, analyzing data, and solving structured problems.',
-      'hero-cv': '↓ CV / Resume',
-      'section-about': 'About',
-      'about-p1': 'I am a third-year undergraduate at the University of Toronto, pursuing a double major in Mathematics and Physics. My coursework spans calculus, linear algebra, ordinary and partial differential equations, classical mechanics, electromagnetism, thermodynamics and statistical physics, probability theory, numerical methods, observational astronomy, stellar physics, and Python data analysis.',
-      'about-p2': 'Fluent in English and a native Mandarin Chinese speaker, comfortable in multicultural environments with 6+ years of experience studying abroad. I bring a structured, careful approach to problem-solving — breaking complex problems into tractable pieces, translating theory into computation, and communicating results clearly.',
-      'section-experience': 'Experience',
-      'exp-astro-title': 'Astrophysical Computation & Modeling',
-      'exp-astro-desc': 'Course-based projects translating theoretical physics into computational models. Implemented orbital dynamics simulations, analyzed gravitational systems, and built numerical solvers for differential equations arising in stellar structure. Emphasis on converting mathematical formalism into clean, well-documented Python code with visualization and error analysis.',
-      'exp-spic-title': 'Product Center Intern — SPIC Hydrogen Energy',
-      'exp-spic-desc': 'Internship at the Product Center of State Power Investment Corporation (SPIC) Hydrogen Energy Technology Development Co., Ltd. Contributed to product development and technical coordination for hydrogen energy systems. Gained exposure to clean energy technology workflows, cross-team collaboration, and the practical challenges of bringing hydrogen-based solutions from R&D toward industrial deployment.',
-      'exp-skf-title': 'Technical Support Assistant — SKF Distributor, Shanghai',
-      'exp-skf-desc': 'Internship at the Beijing general agency for SKF, supporting lubrication system installation, commissioning, and fault diagnosis for industrial clients. Assisted the sales team with project tracking and compiled technical documentation. Developed practical troubleshooting skills and experience in a professional engineering environment.',
-      'exp-teach-title': 'Mathematics & English Instructor',
-      'exp-teach-desc': 'Taught Singapore Mathematics using the CPA (Concrete-Pictorial-Abstract) approach at an education company in Beijing. Also led English reading courses and taught Rubik\'s cube solving as a structured problem-solving exercise. Developed clear communication skills and the ability to break complex ideas into learnable steps.',
-      'section-publications': 'Publications & Research',
-      'pub-paper-title': 'Course Paper',
-      'pub-paper-desc': 'Placeholder for a course paper or essay — e.g. a final paper for a physics or mathematics course, typeset in LaTeX with figures and references.',
-      'pub-lab-title': 'Lab Report',
-      'pub-lab-desc': 'Placeholder for a laboratory report — measurement data, error analysis, uncertainty propagation, and discussion of systematic vs. statistical errors.',
-      'pub-research-title': 'Research Note',
-      'pub-research-desc': 'Placeholder for a research note or short communication — preliminary results, a literature synthesis, or a computational exploration written for discussion.',
-      'section-projects': 'Projects',
-      'proj-orbit-title': 'Orbital Dynamics Simulator',
-      'proj-orbit-desc': 'A Python package for simulating N-body gravitational systems. Numerically integrates equations of motion, renders trajectories, and computes conserved quantities for validation.',
-      'proj-data-title': 'Data Analysis Toolkit',
-      'proj-data-desc': 'A collection of scripts and notebooks for statistical data analysis: curve fitting, χ² goodness-of-fit tests, and publication-quality figure generation.',
-      'proj-link-text': 'View on GitHub ↗',
-      'section-skills': 'Skills',
-      'skill-data-analysis': 'Data Analysis',
-      'skill-data-viz': 'Data Visualization',
-      'skill-orbital': 'Orbital Dynamics',
-      'skill-stellar': 'Stellar Physics',
-      'skill-linear-algebra': 'Linear Algebra',
-      'skill-diff-eq': 'Differential Equations',
-      'skill-numerical': 'Numerical Methods',
-      'skill-classical-mech': 'Classical Mechanics',
-      'skill-ed': 'Electrodynamics',
-      'skill-stat-physics': 'Statistical Physics',
-      'skill-observational': 'Observational Astronomy',
-      'skill-bilingual': 'English & Chinese',
-      'section-contact': 'Contact',
-      'contact-location': 'Beijing & Toronto',
-      'footer': 'Jialiang Li · University of Toronto · Mathematics & Physics',
-      'tag-hydrogen': 'Hydrogen Energy',
-      'tag-clean-energy': 'Clean Energy',
-      'tag-product-dev': 'Product Development',
-      'tag-tech-coord': 'Technical Coordination',
-      'tag-tech-support': 'Technical Support',
-      'tag-fault-diag': 'Fault Diagnosis',
-      'tag-industrial': 'Industrial Systems',
-      'tag-documentation': 'Documentation',
-      'tag-teaching': 'Teaching',
-      'tag-math-edu': 'Mathematics Education',
-      'tag-english': 'English',
-      'tag-academic-writing': 'Academic Writing',
-    },
-    zh: {
-      'hero-tagline': '多伦多大学 数学与物理',
-      'hero-bio': '数学与物理双主修。我在数学严谨与物理直觉的交汇处工作——建立计算模型、分析数据、求解结构化问题。',
-      'hero-cv': '↓ CV / 简历',
-      'section-about': '关于',
-      'about-p1': '我是多伦多大学大三学生，攻读数学与物理双主修。课程涵盖微积分、线性代数、常微分方程与偏微分方程、经典力学、电动力学、热力学与统计物理、概率论、数值方法、观测天文学、恒星物理以及 Python 数据分析。',
-      'about-p2': '英语流利，普通话为母语，拥有 6 年以上海外学习经历，适应多元文化环境。面对问题时，我习惯将其拆解为可处理的子问题，将理论转化为计算，并清晰地呈现结果——这是一种结构化、严谨的思维方式。',
-      'section-experience': '经历',
-      'exp-astro-title': '天体物理计算与建模',
-      'exp-astro-desc': '将理论物理转化为计算模型的课程项目。编写轨道动力学模拟、分析引力系统、构建恒星结构中微分方程的数值求解器。重点在于将数学形式化转化为清晰、文档完备的 Python 代码，并辅以可视化和误差分析。',
-      'exp-spic-title': '产品中心实习生 — 国家电投氢能科技',
-      'exp-spic-desc': '在国家电投集团氢能科技发展有限公司产品中心实习，参与氢能系统的产品开发与技术协调工作。深入了解清洁能源技术流程、跨团队协作，以及将氢能解决方案从研发推向工业应用的实际挑战。',
-      'exp-skf-title': '技术支持助理 — SKF（上海润祥实业）',
-      'exp-skf-desc': '在 SKF 北京总代理实习，协助工业客户进行润滑系统的安装调试与故障诊断。配合销售团队跟进项目进度，整理产品技术资料。在专业工程环境中锻炼了实际的故障排除能力。',
-      'exp-teach-title': '数学与英文教师',
-      'exp-teach-desc': '在北京一家教育公司运用 CPA（具象-图形-抽象）教学法教授新加坡数学，并带领英文阅读课程、教授魔方作为结构化思维训练。锻炼了清晰的表达能力和将复杂概念分解为可学习步骤的技巧。',
-      'section-publications': '论文与研究',
-      'pub-paper-title': '课程论文',
-      'pub-paper-desc': '课程论文占位——例如物理或数学课程的期末论文，使用 LaTeX 排版，含图表与参考文献。',
-      'pub-lab-title': '实验报告',
-      'pub-lab-desc': '实验报告占位——测量数据、误差分析、不确定度传递，以及系统误差与统计误差的讨论。',
-      'pub-research-title': '研究笔记',
-      'pub-research-desc': '研究笔记占位——初步结果、文献综述或计算探索，以讨论而非正式发表为目的撰写。',
-      'section-projects': '代码项目',
-      'proj-orbit-title': '轨道动力学模拟器',
-      'proj-orbit-desc': '用于 N 体引力系统模拟的 Python 包。数值积分运动方程、绘制轨迹、计算守恒量验证模型。',
-      'proj-data-title': '数据分析工具集',
-      'proj-data-desc': '统计数据分析的脚本与笔记本集合：曲线拟合、χ² 拟合优度检验、出版级图表生成。',
-      'proj-link-text': '在 GitHub 上查看 ↗',
-      'section-skills': '技能',
-      'skill-data-analysis': '数据分析',
-      'skill-data-viz': '数据可视化',
-      'skill-orbital': '轨道动力学',
-      'skill-stellar': '恒星物理',
-      'skill-linear-algebra': '线性代数',
-      'skill-diff-eq': '微分方程',
-      'skill-numerical': '数值方法',
-      'skill-classical-mech': '经典力学',
-      'skill-ed': '电动力学',
-      'skill-stat-physics': '统计物理',
-      'skill-observational': '观测天文学',
-      'skill-bilingual': '中英双语',
-      'section-contact': '联系',
-      'contact-location': '北京 & 多伦多',
-      'footer': '李嘉良 · 多伦多大学 · 数学与物理',
-      'tag-hydrogen': '氢能',
-      'tag-clean-energy': '清洁能源',
-      'tag-product-dev': '产品开发',
-      'tag-tech-coord': '技术协调',
-      'tag-tech-support': '技术支持',
-      'tag-fault-diag': '故障诊断',
-      'tag-industrial': '工业系统',
-      'tag-documentation': '技术文档',
-      'tag-teaching': '教学',
-      'tag-math-edu': '数学教育',
-      'tag-english': '英语',
-      'tag-academic-writing': '学术写作',
-    }
-  };
-
-  let lang = localStorage.getItem('lang') || 'en';
-  const toggle = document.getElementById('langToggle');
-
-  function applyLang(l) {
-    lang = l;
-    document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
-    toggle.textContent = l === 'zh' ? 'EN' : '中文';
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.dataset.i18n;
-      if (i18n[l][key] != null) el.innerHTML = i18n[l][key];
-    });
-    localStorage.setItem('lang', l);
-  }
-
-  toggle.addEventListener('click', () => applyLang(lang === 'en' ? 'zh' : 'en'));
-
-  // Apply saved language on load (before reveal so content is settled)
-  if (lang !== 'en') applyLang(lang);
-
-  // ── Scroll reveal ────────────────────────────────────
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const delay = entry.target.dataset.delay || 0;
-        setTimeout(() => entry.target.classList.add('visible'), delay);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
-
-  document.querySelectorAll('.projects-grid').forEach(grid => {
-    grid.querySelectorAll('.reveal').forEach((el, i) => { el.dataset.delay = i * 60; });
-  });
-
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+const translations={"en": {"nav-work": "Selected work", "nav-exp": "Experience", "nav-contact": "Contact", "eyebrow": "PHYSICS BACKGROUND. ANALYTICAL MINDSET.", "hero": "Turning data into<br>
+<em>clear insight.</em>", "intro": "I’m Jialiang Li, a final-year Honours Bachelor of Science candidate at the University of Toronto. I connect quantitative analysis, experimental work, and market research to make complex questions easier to understand.", "status": "Seeking 2027 new-graduate opportunities in Canada", "focus": "Data analytics · Business & operations analysis · Technology consulting", "work-cta": "Explore my work", "contact-cta": "Get in touch", "edu-label": "EDUCATION", "edu-degree": "Honours Bachelor of Science", "edu-major": "Physics major<br>Astrophysics & Mathematics minors", "edu-date": "Expected coursework completion · April 2027", "work-label": "SELECTED WORK", "work-title": "A closer look at the analysis.", "work-sub": "Real coursework, real measurements, and the reasoning behind the result.", "signal-title": "Finding a startup transient", "signal-desc": "Collected experimental data and analyzed a one-million-sample instrument recording. Block-power visualization revealed a short startup transient that distorted the overall scatter.", "signal-metric": "1,000,000 samples", "signal-note": "19.52% → 4.71% relative scatter after excluding the first 10 ms", "signal-details": "Read the analysis", "signal-body": "<p>
+<strong>Question.</strong> Does the measured noise agree with the expected statistical behavior?</p>
+<p>
+<strong>Method.</strong> Checked sample counts, ADC range and clipping; calculated power in blocks of 1,000 samples; compared the stable portion with the ideal radiometer prediction.</p>
+<p>
+<strong>Result.</strong> After excluding the initial 10 ms, relative scatter was 4.71%, compared with an ideal prediction of 4.47%. A longer recording was split into 9,951 segments for averaged FFT power-spectrum analysis.</p>
+<p>
+<strong>Takeaway.</strong> Check data quality and transient behavior before interpreting an aggregate statistic. These are results from an academic laboratory setup.</p>", "stock-title": "Separating trend from fluctuation", "stock-desc": "Loaded S&P 500 opening values from CSV and compared the original time series with an FFT-filtered view of long-term variation.", "stock-metric": "126 business days", "stock-note": "Retained variations with longer periods", "stock-body": "<p>
+<strong>Method.</strong> Used NumPy FFT and inverse FFT to retain variations with periods longer than 126 business days. Plotted the raw and filtered series together for comparison.</p>
+<p>
+<strong>Validation.</strong> The unfiltered FFT round-trip reconstruction had a maximum absolute error of approximately 5 × 10<sup>−12</sup> index points.</p>
+<p>
+<strong>Limitations.</strong> FFT assumes periodic repetition. The mismatch between the beginning and end creates endpoint artifacts. This is exploratory historical-data analysis, not a forecasting or trading model.</p>", "camera-title": "Calibrating a camera with statistics", "camera-desc": "Processed 30-frame image sequences and fitted variance–mean relationships across 999 retained pixels to estimate camera gain and read noise.", "camera-note": "Regression · Uncertainty estimation · Measurement quality", "exp-label": "EXPERIENCE", "exp-title": "Technical depth.<br>Practical perspective.", "spic-role": "Product Center Intern", "spic-date": "May–July 2026 · Beijing", "spic-body": "<li>Analyzed the hydrogen-powered UAV market across market structure, technology, and pricing.</li>
+<li>Produced a structured competitive analysis report with strategic product recommendations.</li>
+<li>Compared fuel-cell specifications to support product positioning.</li>", "other-label": "ADDITIONAL EXPERIENCE", "skf-title": "Technical support · SKF distributor", "skf-desc": "Supported lubrication-system installation, commissioning, and fault diagnosis; assisted with project tracking and technical documentation.", "teach-title": "Mathematics & English instruction", "teach-desc": "Taught mathematics using the Concrete–Pictorial–Abstract approach, led English reading, and broke complex ideas into learnable steps.", "skills-label": "TOOLKIT", "skills-title": "Tools are useful.<br>Reasoning makes them count.", "skills-code": "Programming & analysis", "skills-method": "Methods", "skills-method-list": "Statistical analysis · Regression · Uncertainty estimation · Fourier analysis · Numerical methods", "skills-business": "Research & communication", "skills-business-list": "Competitive research · Technical comparison · Data visualization · English & Mandarin", "contact-label": "LET’S CONNECT", "contact-title": "A quantitative background.<br>A practical next step.", "contact-desc": "I’m looking for new-graduate and entry-level roles in Canada where data, research, and clear communication support better decisions. Expected coursework completion: April 2027.", "footer": "Toronto, Canada · Updated November 2026"}, "zh": {"nav-work": "项目作品", "nav-exp": "经历", "nav-contact": "联系", "eyebrow": "物理背景 · 数据思维", "hero": "让数据成为<br>
+<em>清晰的洞见。</em>", "intro": "我是李嘉良，多伦多大学荣誉理学学士应届生。我将定量分析、实验实践与市场研究结合，把复杂问题转化为清晰的理解与建议。", "status": "正在寻找加拿大 2027 应届生岗位", "focus": "数据分析 · 商业与运营分析 · 技术咨询", "work-cta": "查看项目作品", "contact-cta": "联系我", "edu-label": "教育背景", "edu-degree": "荣誉理学学士", "edu-major": "物理主修<br>天体物理与数学辅修", "edu-date": "预计完成课程 · 2027 年 4 月", "work-label": "精选作品", "work-title": "从问题到分析结果。", "work-sub": "真实课程项目与测量数据，以及结果背后的分析过程。", "signal-title": "识别信号中的起始瞬态", "signal-desc": "参与实验采集，分析含一百万个采样点的仪器记录。分块功率可视化揭示了影响整体波动统计的短暂起始瞬态。", "signal-metric": "1,000,000 个采样点", "signal-note": "剔除起始 10 ms 后，相对波动由 19.52% 变为 4.71%", "signal-details": "展开分析过程", "signal-body": "<p>
+<strong>问题：</strong>测量噪声是否符合预期统计规律？</p>
+<p>
+<strong>方法：</strong>检查采样数量、ADC 范围和削波，按每 1,000 点计算分块功率，并将稳定时段与理想辐射计预测比较。</p>
+<p>
+<strong>结果：</strong>剔除起始 10 ms 后，相对波动为 4.71%，理想预测为 4.47%。另将较长记录分为 9,951 段进行 FFT 功率谱平均。</p>
+<p>
+<strong>思考：</strong>解释整体统计量前，应先检查数据质量和瞬态效应。本项目为课程实验。</p>", "stock-title": "从波动中观察长期变化", "stock-desc": "读取 CSV 中的标普 500 开盘点位，以 FFT 滤波比较原始时间序列与长期变化。", "stock-metric": "126 个交易日", "stock-note": "保留周期更长的变化分量", "stock-body": "<p>
+<strong>方法：</strong>用 NumPy FFT 与逆变换保留周期超过 126 个交易日的分量，绘制原始序列与滤波结果进行比较。</p>
+<p>
+<strong>验证：</strong>未滤波的 FFT 往返重建最大绝对误差约为 5 × 10<sup>−12</sup> 个指数点。</p>
+<p>
+<strong>局限：</strong>FFT 假设数据周期重复，首尾不匹配会引入边界效应。本项目用于探索历史数据，不是预测或交易模型。</p>", "camera-title": "用统计方法标定相机", "camera-desc": "处理 30 帧图像序列，对保留的 999 个像素拟合方差与均值关系，估计相机增益与读出噪声。", "camera-note": "回归拟合 · 不确定性估计 · 测量质量", "exp-label": "实践经历", "exp-title": "技术理解，<br>结合实际问题。", "spic-role": "产品中心实习生", "spic-date": "2026 年 5–7 月 · 北京", "spic-body": "<li>从市场结构、技术和定价维度研究氢能无人机竞品格局。</li>
+<li>形成结构化竞品分析报告并提出产品策略建议。</li>
+<li>比较燃料电池技术参数，为产品定位提供支持。</li>", "other-label": "其他经历", "skf-title": "技术支持 · SKF 经销商", "skf-desc": "协助润滑系统安装调试与故障诊断，参与项目跟进和技术资料整理。", "teach-title": "数学与英文教学", "teach-desc": "使用 CPA（具象—图形—抽象）方法教授数学、带领英文阅读，将复杂概念拆解为可学习的步骤。", "skills-label": "技能与方法", "skills-title": "工具支持分析，<br>思考赋予意义。", "skills-code": "编程与分析", "skills-method": "分析方法", "skills-method-list": "统计分析 · 回归拟合 · 不确定性估计 · 傅里叶分析 · 数值方法", "skills-business": "研究与沟通", "skills-business-list": "竞品研究 · 技术比较 · 数据可视化 · 中英双语", "contact-label": "保持联系", "contact-title": "从数理训练，<br>走向实际问题。", "contact-desc": "我正在寻找加拿大应届生及初级岗位，希望运用数据分析、研究与清晰沟通支持更好的决策。预计于 2027 年 4 月完成课程。", "footer": "加拿大多伦多 · 更新于 2026 年 11 月"}};
+const toggle=document.getElementById('langToggle');
+function applyLanguage(lang){const selected=lang==='zh'?'zh':'en';document.documentElement.lang=selected==='zh'?'zh-CN':'en';document.querySelectorAll('[data-i18n]').forEach(el=>{el.innerHTML=translations[selected][el.dataset.i18n]});toggle.textContent=selected==='zh'?'EN':'中文';toggle.setAttribute('aria-label',selected==='zh'?'Switch language to English':'切换到中文');try{localStorage.setItem('portfolio-language',selected)}catch(e){}}
+let saved='en';try{saved=localStorage.getItem('portfolio-language')||'en'}catch(e){}applyLanguage(saved);toggle.addEventListener('click',()=>applyLanguage(document.documentElement.lang==='en'?'zh':'en'));
 </script>
-
 </body>
 </html>
